@@ -5,12 +5,14 @@ import android.view.View;
 
 import com.liuwanshun.android_disposable.R;
 
-import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
 /**
- * liuwanshun
+ * @author liuwanshun
  */
 public class ViewDisposable {
+    private ViewDisposable() {
+    }
 
     public static CompositeDisposable from(View view) {
 

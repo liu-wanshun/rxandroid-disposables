@@ -36,11 +36,11 @@ dependencies {
     annotationProcessor deps.lifecycle.compiler
     implementation deps.room.runtime
     annotationProcessor deps.room.compiler
-    implementation deps.room.rxjava2
+    implementation deps.room.rxjava3
 
     // RxJava
-    implementation deps.rx_android
-    implementation deps.rxjava2
+    implementation deps.rx_android3
+    implementation deps.rxjava3
 
     // Dependencies for local unit tests
     testImplementation deps.junit

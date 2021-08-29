@@ -28,9 +28,10 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.android.observability.Injection;
 import com.example.android.persistence.R;
+import com.lws.rxutils.RxCall;
+import com.lws.rxutils.RxTransformer;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
+import io.reactivex.rxjava3.core.Single;
 
 
 /**
@@ -66,8 +67,7 @@ public class UserActivity extends AppCompatActivity {
         // Update the user name text view, at every onNext emission.
         // In case of error, log the exception.
         LifecycleDisposable.from(this).add(mViewModel.getUserName()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .compose(RxTransformer.io2uiFlowable())
                 .subscribe(userName -> mUserName.setText(userName),
                         throwable -> Log.e(TAG, "Unable to get username", throwable)));
     }
@@ -79,9 +79,33 @@ public class UserActivity extends AppCompatActivity {
         // Subscribe to updating the user name.
         // Re-enable the button once the user name has been updated
         LifecycleDisposable.from(this).add(mViewModel.updateUserName(userName)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .compose(RxTransformer.io2uiCompletable())
                 .subscribe(() -> mUpdateButton.setEnabled(true),
                         throwable -> Log.e(TAG, "Unable to update username", throwable)));
+
+
+        LifecycleDisposable.from(this).add(RxCall.io2ui(() -> work(5000))
+                .subscribe(() -> Log.d(TAG, "work:  over")));
+
+        LifecycleDisposable.from(this).add(RxCall.io2ui(() -> {
+            work(3000);
+            return "work over";
+        }).subscribe(result -> Log.d(TAG, "accept: " + result)));
+
+
+        Single.fromSupplier(() -> {
+            work(3000);
+            return "work over";
+        })
+                .compose(RxTransformer.io2uiSingle())
+                .subscribe(result -> Log.d(TAG, "accept: " + result));
+    }
+
+
+    private void work(long time) {
+        long a = System.currentTimeMillis();
+        while (System.currentTimeMillis() <= a + time) {
+            Log.d(TAG, "work: ");
+        }
     }
 }

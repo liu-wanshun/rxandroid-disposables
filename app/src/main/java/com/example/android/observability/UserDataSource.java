@@ -18,8 +18,9 @@ package com.example.android.observability;
 
 import com.example.android.observability.persistence.User;
 
-import io.reactivex.Completable;
-import io.reactivex.Flowable;
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Flowable;
+
 
 /**
  * Access point for managing user data.

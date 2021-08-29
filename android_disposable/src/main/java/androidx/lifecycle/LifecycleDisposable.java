@@ -5,12 +5,14 @@ import android.annotation.SuppressLint;
 
 import androidx.annotation.NonNull;
 
-import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
 /**
- * liuwanshun
+ * @author liuwanshun
  */
 public class LifecycleDisposable {
+    private LifecycleDisposable() {
+    }
 
     public static CompositeDisposable from(LifecycleOwner lifecycleOwner) {
         return from(lifecycleOwner.getLifecycle());

@@ -3,12 +3,14 @@ package androidx.lifecycle;
 import java.io.Closeable;
 import java.io.IOException;
 
-import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
 /**
- * liuwanshun
+ * @author liuwanshun
  */
 public class ViewModelDisposable {
+    private ViewModelDisposable() {
+    }
 
     private static final String JOB_KEY = "ViewModelCompositeDisposable.JOB_KEY";
 
