@@ -23,7 +23,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LifecycleDisposable;
+import androidx.lifecycle.AndroidDisposable;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.android.observability.Injection;
@@ -66,10 +66,12 @@ public class UserActivity extends AppCompatActivity {
         // Subscribe to the emissions of the user name from the view model.
         // Update the user name text view, at every onNext emission.
         // In case of error, log the exception.
-        LifecycleDisposable.from(this).add(mViewModel.getUserName()
+        mViewModel.getUserName()
                 .compose(RxTransformer.io2uiFlowable())
                 .subscribe(userName -> mUserName.setText(userName),
-                        throwable -> Log.e(TAG, "Unable to get username", throwable)));
+                        throwable -> Log.e(TAG, "Unable to get username", throwable),
+                        () -> Log.e(TAG, "onComplete"),
+                        AndroidDisposable.from(this));
     }
 
     private void updateUserName() {
@@ -78,27 +80,32 @@ public class UserActivity extends AppCompatActivity {
         mUpdateButton.setEnabled(false);
         // Subscribe to updating the user name.
         // Re-enable the button once the user name has been updated
-        LifecycleDisposable.from(this).add(mViewModel.updateUserName(userName)
+        mViewModel.updateUserName(userName)
                 .compose(RxTransformer.io2uiCompletable())
                 .subscribe(() -> mUpdateButton.setEnabled(true),
-                        throwable -> Log.e(TAG, "Unable to update username", throwable)));
+                        throwable -> Log.e(TAG, "Unable to update username", throwable),
+                        AndroidDisposable.from(this));
 
+        RxCall.io2ui(() -> work(5000))
+                .subscribe(() -> Log.d(TAG, "work:  over"),
+                        throwable -> Log.e(TAG, "updateUserName: ", throwable),
+                        AndroidDisposable.from(this));
 
-        LifecycleDisposable.from(this).add(RxCall.io2ui(() -> work(5000))
-                .subscribe(() -> Log.d(TAG, "work:  over")));
-
-        LifecycleDisposable.from(this).add(RxCall.io2ui(() -> {
+        RxCall.io2ui(() -> {
             work(3000);
             return "work over";
-        }).subscribe(result -> Log.d(TAG, "accept: " + result)));
+        }).subscribe(result -> Log.d(TAG, "accept: " + result),
+                throwable -> Log.e(TAG, "updateUserName: ", throwable),
+                AndroidDisposable.from(this));
 
 
         Single.fromSupplier(() -> {
             work(3000);
             return "work over";
-        })
-                .compose(RxTransformer.io2uiSingle())
-                .subscribe(result -> Log.d(TAG, "accept: " + result));
+        }).compose(RxTransformer.io2uiSingle())
+                .subscribe(result -> Log.d(TAG, "accept: " + result),
+                        throwable -> Log.e(TAG, "updateUserName: ", throwable),
+                        AndroidDisposable.from(this));
     }
 
 

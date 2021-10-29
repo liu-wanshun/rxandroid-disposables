@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion build_versions.compile_sdk
-    buildToolsVersion build_versions.build_tools
 
     defaultConfig {
         applicationId "com.example.android.persistence"
@@ -28,8 +27,9 @@ android {
 
 dependencies {
     implementation deps.app_compat
-    implementation deps.fragment.runtime_ktx
+    implementation deps.fragment.runtime
     implementation deps.material
+    implementation deps.core_ktx
     // Architecture components
     implementation deps.lifecycle.runtime
     implementation project(path: ':android_disposable')

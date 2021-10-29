@@ -10,16 +10,16 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable;
 /**
  * @author liuwanshun
  */
-public class LifecycleDisposable {
+class LifecycleDisposable {
     private LifecycleDisposable() {
     }
 
-    public static CompositeDisposable from(LifecycleOwner lifecycleOwner) {
+    static CompositeDisposable from(LifecycleOwner lifecycleOwner) {
         return from(lifecycleOwner.getLifecycle());
     }
 
     @SuppressLint("RestrictedApi")
-    public static CompositeDisposable from(Lifecycle lifecycle) {
+    static CompositeDisposable from(Lifecycle lifecycle) {
         while (true) {
             DisposableHolder disposableHolder = (DisposableHolder) lifecycle.mInternalScopeRef.get();
             if (disposableHolder != null) {

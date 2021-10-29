@@ -10,29 +10,24 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable;
 /**
  * @author liuwanshun
  */
-public class ViewDisposable {
+class ViewDisposable {
     private ViewDisposable() {
     }
 
-    public static CompositeDisposable from(View view) {
+    static CompositeDisposable from(View view) {
 
         if (!view.isAttachedToWindow()) {
             throw new IllegalStateException("Can't access the View's Disposable "
                     + "before onAttachedToWindow() or after onDetachedFromWindow()");
         }
 
-        ViewDisposableHolder viewDisposableHolder = (ViewDisposableHolder) view.getTag(
-
-                R.id.view_disposable);
-        if (viewDisposableHolder != null) {
-            return viewDisposableHolder.disposable;
+        ViewDisposableHolder viewDisposableHolder = (ViewDisposableHolder) view.getTag(R.id.view_disposable);
+        if (viewDisposableHolder == null) {
+            CompositeDisposable disposable = new CompositeDisposable();
+            viewDisposableHolder = new ViewDisposableHolder(disposable);
+            view.addOnAttachStateChangeListener(viewDisposableHolder);
+            view.setTag(R.id.view_disposable, viewDisposableHolder);
         }
-
-        CompositeDisposable disposable = new CompositeDisposable();
-        viewDisposableHolder = new ViewDisposableHolder(disposable);
-        view.addOnAttachStateChangeListener(viewDisposableHolder);
-        view.setTag(R.id.view_disposable, viewDisposableHolder);
-
         return viewDisposableHolder.disposable;
 
     }
