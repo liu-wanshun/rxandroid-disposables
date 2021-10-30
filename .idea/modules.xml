@@ -5,9 +5,6 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/AndroidDisposable.iml" filepath="$PROJECT_DIR$/.idea/modules/AndroidDisposable.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/android_disposable/AndroidDisposable.android_disposable.iml" filepath="$PROJECT_DIR$/.idea/modules/android_disposable/AndroidDisposable.android_disposable.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/AndroidDisposable.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/AndroidDisposable.app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/BasicRxJavaSample.iml" filepath="$PROJECT_DIR$/.idea/modules/BasicRxJavaSample.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/android_disposable/BasicRxJavaSample.android_disposable.iml" filepath="$PROJECT_DIR$/.idea/modules/android_disposable/BasicRxJavaSample.android_disposable.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/BasicRxJavaSample.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/BasicRxJavaSample.app.iml" />
     </modules>
   </component>
 </project>

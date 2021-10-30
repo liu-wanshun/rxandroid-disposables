@@ -1,4 +1,4 @@
-package com.lws.rxutils;
+package com.example.android.rxutils;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Completable;

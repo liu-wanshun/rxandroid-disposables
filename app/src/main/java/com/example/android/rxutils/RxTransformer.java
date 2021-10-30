@@ -1,4 +1,4 @@
-package com.lws.rxutils;
+package com.example.android.rxutils;
 
 import androidx.annotation.NonNull;
 

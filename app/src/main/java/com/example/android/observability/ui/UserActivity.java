@@ -28,8 +28,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.android.observability.Injection;
 import com.example.android.persistence.R;
-import com.lws.rxutils.RxCall;
-import com.lws.rxutils.RxTransformer;
+import com.example.android.rxutils.RxCall;
+import com.example.android.rxutils.RxTransformer;
 
 import io.reactivex.rxjava3.core.Single;
 
