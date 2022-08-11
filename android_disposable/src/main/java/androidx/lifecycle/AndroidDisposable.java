@@ -2,6 +2,7 @@ package androidx.lifecycle;
 
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
@@ -24,7 +25,7 @@ public class AndroidDisposable {
      *                       如果LifecycleOwner是{@link FragmentActivity},在{@link FragmentActivity#onDestroy() }之前dispose。
      * @return CompositeDisposable
      */
-    public static CompositeDisposable from(LifecycleOwner lifecycleOwner) {
+    public static CompositeDisposable from(@NonNull LifecycleOwner lifecycleOwner) {
         return LifecycleDisposable.from(lifecycleOwner);
     }
 
@@ -34,7 +35,7 @@ public class AndroidDisposable {
      * @param lifecycle 关联这个lifecycle的生命周期,也可以看看{@link #from(LifecycleOwner)}}
      * @return CompositeDisposable
      */
-    public static CompositeDisposable from(Lifecycle lifecycle) {
+    public static CompositeDisposable from(@NonNull Lifecycle lifecycle) {
         return LifecycleDisposable.from(lifecycle);
     }
 
@@ -44,7 +45,7 @@ public class AndroidDisposable {
      * @param viewModel 关联这个viewModel的生命周期,在{@link ViewModel#onCleared() }之前dispose
      * @return CompositeDisposable
      */
-    public static CompositeDisposable from(ViewModel viewModel) {
+    public static CompositeDisposable from(@NonNull ViewModel viewModel) {
         return ViewModelDisposable.from(viewModel);
     }
 
@@ -55,7 +56,7 @@ public class AndroidDisposable {
      * @param view 关联这个view的生命周期, 在{@link View#onDetachedFromWindow()}之后dispose
      * @return CompositeDisposable
      */
-    public static CompositeDisposable from(View view) {
+    public static CompositeDisposable from(@NonNull View view) {
         return ViewDisposable.from(view);
     }
 }

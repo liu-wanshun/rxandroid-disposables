@@ -5,6 +5,8 @@ import android.annotation.SuppressLint;
 
 import androidx.annotation.NonNull;
 
+import java.util.WeakHashMap;
+
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
 /**
@@ -14,24 +16,25 @@ class LifecycleDisposable {
     private LifecycleDisposable() {
     }
 
+    private static final WeakHashMap<Lifecycle, DisposableHolder> lifecycleDisposableMap = new WeakHashMap<>();
+    private static final Object object = new Object();
+
     static CompositeDisposable from(LifecycleOwner lifecycleOwner) {
         return from(lifecycleOwner.getLifecycle());
     }
 
     @SuppressLint("RestrictedApi")
     static CompositeDisposable from(Lifecycle lifecycle) {
-        while (true) {
-            DisposableHolder disposableHolder = (DisposableHolder) lifecycle.mInternalScopeRef.get();
+        synchronized (object) {
+            DisposableHolder disposableHolder = (DisposableHolder) lifecycleDisposableMap.get(lifecycle);
             if (disposableHolder != null) {
                 return disposableHolder.disposable;
             }
 
             disposableHolder = new DisposableHolder(lifecycle, new CompositeDisposable());
-
-            if (lifecycle.mInternalScopeRef.compareAndSet(null, disposableHolder)) {
-                disposableHolder.register();
-                return disposableHolder.disposable;
-            }
+            lifecycleDisposableMap.put(lifecycle, disposableHolder);
+            disposableHolder.register();
+            return disposableHolder.disposable;
         }
     }
 
