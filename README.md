@@ -1,76 +1,65 @@
 # Android Disposable
 
-[![](https://jitpack.io/v/com.gitee.liu_wanshun/AndroidDisposable.svg)](https://jitpack.io/#com.gitee.liu_wanshun/AndroidDisposable)
+[![Jitpack](https://jitpack.io/v/com.github.liu-wanshun/AndroidDisposable.svg)](https://jitpack.io/#com.github.liu-wanshun/AndroidDisposable)
+[![GitHub license](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg?style=flat)](https://www.apache.org/licenses/LICENSE-2.0)
 
-**Step 1.** Add it in your root build.gradle at the end of repositories:
+参考`AndroidX-KTX`中的`lifecycleScope`,将RxJava绑定Android周期,减少/防止内存泄漏。
 
-```groovy
-	allprojects {
-		repositories {
-			...
-			maven { url 'https://jitpack.io' }
-		}
-	}
-```
+## 添加依赖
 
-**Step 2.** Add the dependency
+1. 添加`jitpack`仓库
 
 ```groovy
-	dependencies {
-	        implementation 'com.gitee.liu_wanshun:AndroidDisposable:Tag'
-        	//需要 rxjava3 和 rxAndroid
-	}
+allprojects {
+    repositories {
+        maven { url "https://jitpack.io" }
+    }
+}
 ```
 
-(Please replace `Tag`  with the latest version numbers: [![](https://jitpack.io/v/com.gitee.liu_wanshun/AndroidDisposable.svg)](https://jitpack.io/#com.gitee.liu_wanshun/AndroidDisposable)
+2. 添加`AndroidDisposable`
+   依赖最新版（将Tag替换为[![](https://jitpack.io/v/com.github.liu-wanshun/AndroidDisposable.svg)](https://jitpack.io/#com.github.liu-wanshun/AndroidDisposable)
+   后面的数字）
 
-
-
-## 功能介绍
-
-绑定生命周期（防止内存泄漏）
-
-```java
-// this可以是 LifecycleOwner / Lifecycle / ViewModel / View
-AndroidDisposable.from(this).add(Disposable disposable);
-
+```groovy
+dependencies {
+    implementation "com.github.liu-wanshun:AndroidDisposable:Tag"
+    //需要 rxjava3 和 rxAndroid
+}
 ```
 
 ## 示例
 
+**[推荐]** Rxjava`3.1.0`起支持以下写法
+
 ```java
-        
-AndroidDisposable.from(this).add(Single.fromSupplier(() -> {
-            return "";
+Single.fromSupplier(()->{
+        return"";
         }).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(s -> {
-                    Log.e(TAG, "成功结果: " + s);
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(s->{
+        Log.e(TAG,"成功结果: "+s);
 
-                }, throwable -> {
+        },throwable->{
 
-                    Log.e(TAG, "失败: ", throwable);
+        Log.e(TAG,"失败: ",throwable);
 
-                }));
+        },AndroidDisposable.from(this));
+```
 
+[不推荐]旧版用法
 
-
-
-
-//Rxjava3.1.0起支持以下写法
-Single.fromSupplier(() -> {
-            return "";
+```java
+AndroidDisposable.from(this).add(Single.fromSupplier(()->{
+        return"";
         }).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(s -> {
-                    Log.e(TAG, "成功结果: " + s);
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(s->{
+        Log.e(TAG,"成功结果: "+s);
 
-                }, throwable -> {
+        },throwable->{
 
-                    Log.e(TAG, "失败: ", throwable);
+        Log.e(TAG,"失败: ",throwable);
 
-                }, AndroidDisposable.from(this));
-
-
-
+        }));
 ```
