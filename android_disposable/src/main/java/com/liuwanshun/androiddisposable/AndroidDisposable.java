@@ -1,10 +1,13 @@
-package androidx.lifecycle;
+package com.liuwanshun.androiddisposable;
 
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.ViewModel;
 
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 

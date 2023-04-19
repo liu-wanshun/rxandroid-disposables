@@ -1,9 +1,7 @@
-package androidx.lifecycle;
+package com.liuwanshun.androiddisposable;
 
 
 import android.view.View;
-
-import com.liuwanshun.android_disposable.R;
 
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 

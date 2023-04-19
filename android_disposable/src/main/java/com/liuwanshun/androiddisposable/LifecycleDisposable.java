@@ -1,9 +1,12 @@
-package androidx.lifecycle;
+package com.liuwanshun.androiddisposable;
 
 
 import android.annotation.SuppressLint;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleEventObserver;
+import androidx.lifecycle.LifecycleOwner;
 
 import java.util.WeakHashMap;
 
