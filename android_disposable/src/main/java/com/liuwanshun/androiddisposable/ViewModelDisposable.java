@@ -1,4 +1,7 @@
-package androidx.lifecycle;
+package com.liuwanshun.androiddisposable;
+
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelDelegate;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -16,9 +19,9 @@ class ViewModelDisposable {
 
     static CompositeDisposable from(ViewModel viewModel) {
 
-        DisposableHolder disposableHolder = viewModel.getTag(JOB_KEY);
+        DisposableHolder disposableHolder = ViewModelDelegate.getTag(viewModel, JOB_KEY);
         if (disposableHolder == null) {
-            disposableHolder = viewModel.setTagIfAbsent(JOB_KEY, new DisposableHolder(new CompositeDisposable()));
+            disposableHolder = ViewModelDelegate.setTagIfAbsent(viewModel, JOB_KEY, new DisposableHolder(new CompositeDisposable()));
         }
         return disposableHolder.getDisposable();
     }

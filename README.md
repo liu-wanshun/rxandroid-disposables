@@ -1,6 +1,6 @@
 # Android Disposable
 
-[![Jitpack](https://jitpack.io/v/com.github.liu-wanshun/AndroidDisposable.svg)](https://jitpack.io/#com.github.liu-wanshun/AndroidDisposable)
+[![jitpack](https://jitpack.io/v/liu-wanshun/AndroidDisposable.svg)](https://jitpack.io/#liu-wanshun/AndroidDisposable)
 [![GitHub license](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg?style=flat)](https://www.apache.org/licenses/LICENSE-2.0)
 
 参考`AndroidX-KTX`中的`lifecycleScope`,将RxJava绑定Android周期,减少/防止内存泄漏。
@@ -18,13 +18,14 @@ allprojects {
 ```
 
 2. 添加`AndroidDisposable`
-   依赖最新版（将Tag替换为[![](https://jitpack.io/v/com.github.liu-wanshun/AndroidDisposable.svg)](https://jitpack.io/#com.github.liu-wanshun/AndroidDisposable)
+   依赖最新版（将Tag替换为[![jitpack](https://jitpack.io/v/liu-wanshun/AndroidDisposable.svg)](https://jitpack.io/#liu-wanshun/AndroidDisposable)
    后面的数字）
 
 ```groovy
 dependencies {
     implementation "com.github.liu-wanshun:AndroidDisposable:Tag"
-    //需要 rxjava3 和 rxAndroid
+    // 需要 Rxjava3 和 RxAndroid
+    // 如果您的项目中使用Kotlin,建议您使用Kotlin协程而不是Rxjava
 }
 ```
 

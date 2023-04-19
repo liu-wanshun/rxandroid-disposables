@@ -1,15 +1,16 @@
 plugins {
-    id 'com.android.library'
+    alias(libs.plugins.android.library)
     id 'maven-publish'
 }
 
 
 android {
-    compileSdkVersion build_versions.compile_sdk
+    namespace "com.liuwanshun.androiddisposable"
+    compileSdk 33
 
     defaultConfig {
-        minSdkVersion build_versions.min_sdk
-        targetSdkVersion build_versions.target_sdk
+        minSdk 21
+        targetSdk 33
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -25,16 +26,20 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
 }
 
 dependencies {
-    implementation deps.rx_android3
-    implementation deps.rxjava3
-
-    implementation deps.lifecycle.common
-    implementation deps.lifecycle.viewmodel
-
-    implementation deps.fragment.runtime
+    implementation libs.rxandroid3
+    implementation libs.rxjava3
+    implementation libs.lifecycle.runtime
+    implementation libs.lifecycle.viewmodel
+    implementation libs.fragment
 }
 
 
@@ -43,7 +48,7 @@ afterEvaluate {
         publications {
             release(MavenPublication) {
                 from components.release
-                groupId = 'com.gitee.liuwanshun'
+                groupId = 'com.github.liu-wanshun'
                 artifactId = 'android-disposable'
                 version = '1.0'
             }
