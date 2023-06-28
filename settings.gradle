@@ -14,5 +14,5 @@ dependencyResolutionManagement {
 }
 
 include(
-       // ":app",
-        ":android_disposable")
+        ":app",
+        ':rxandroid_disposables')

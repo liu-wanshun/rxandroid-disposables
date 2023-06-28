@@ -1,4 +1,4 @@
-package com.liuwanshun.androiddisposable;
+package com.liuwanshun.rxandroid.disposables;
 
 
 import android.view.View;
@@ -8,23 +8,29 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable;
 /**
  * @author liuwanshun
  */
-class ViewDisposable {
-    private ViewDisposable() {
+public class ViewAttachDisposable {
+    private ViewAttachDisposable() {
     }
 
-    static CompositeDisposable from(View view) {
+    /**
+     * 当View detachedFromWindow 时执行dispose
+     *
+     * @param view 关联这个view的生命周期, 在{@link View#onDetachedFromWindow()}之后dispose
+     * @return CompositeDisposable
+     */
+    public static CompositeDisposable from(View view) {
 
         if (!view.isAttachedToWindow()) {
             throw new IllegalStateException("Can't access the View's Disposable "
                     + "before onAttachedToWindow() or after onDetachedFromWindow()");
         }
 
-        ViewDisposableHolder viewDisposableHolder = (ViewDisposableHolder) view.getTag(R.id.view_disposable);
+        ViewDisposableHolder viewDisposableHolder = (ViewDisposableHolder) view.getTag(R.id.view_attach_window_disposable);
         if (viewDisposableHolder == null) {
             CompositeDisposable disposable = new CompositeDisposable();
             viewDisposableHolder = new ViewDisposableHolder(disposable);
             view.addOnAttachStateChangeListener(viewDisposableHolder);
-            view.setTag(R.id.view_disposable, viewDisposableHolder);
+            view.setTag(R.id.view_attach_window_disposable, viewDisposableHolder);
         }
         return viewDisposableHolder.disposable;
 
@@ -46,7 +52,7 @@ class ViewDisposable {
         public void onViewDetachedFromWindow(View v) {
             disposable.dispose();
             v.removeOnAttachStateChangeListener(this);
-            v.setTag(R.id.view_disposable, null);
+            v.setTag(R.id.view_attach_window_disposable, null);
         }
     }
 }

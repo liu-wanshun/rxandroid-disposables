@@ -5,14 +5,12 @@ plugins {
 
 
 android {
-    namespace "com.liuwanshun.androiddisposable"
+    namespace "com.liuwanshun.rxandroid.disposables"
     compileSdk 33
 
     defaultConfig {
         minSdk 21
         targetSdk 33
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
 
@@ -35,8 +33,8 @@ android {
 }
 
 dependencies {
-    implementation libs.rxandroid3
-    implementation libs.rxjava3
+    api libs.rxandroid3
+    api libs.rxjava3
     implementation libs.lifecycle.runtime
     implementation libs.lifecycle.viewmodel
     implementation libs.fragment
@@ -49,7 +47,7 @@ afterEvaluate {
             release(MavenPublication) {
                 from components.release
                 groupId = 'com.github.liu-wanshun'
-                artifactId = 'android-disposable'
+                artifactId = 'rxandroid-disposables'
                 version = '1.0'
             }
         }
